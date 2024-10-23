@@ -6,7 +6,7 @@ import Page from "./component/Page/Page";
 import { MoviContext } from "./Context";
 
 function App() {
-  const { cartData, setCartData } = useState([]);
+  const [cartData, setCartData] = useState([]);
 
   return (
     <>

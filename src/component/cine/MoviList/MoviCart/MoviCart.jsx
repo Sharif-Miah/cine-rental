@@ -12,7 +12,23 @@ const MoviCart = ({ movie }) => {
   const [selectedModal, setSelectedModal] = useState(null);
   const { cartData, setCartData } = useContext(MoviContext);
 
-  const notify = () => toast("Wow so easy!");
+  const addedMovie = () => toast.success("Success Add movie in cart !");
+  const notifyAdd = () => toast.error("Movie Already Added!");
+
+  const hanleAddToCart = (event, movie) => {
+    event.stopPropagation();
+
+    const found = cartData.find((item) => {
+      return item.id === movie.id;
+    });
+
+    if (!found) {
+      setCartData([...cartData, movie]);
+      addedMovie();
+    } else {
+      notifyAdd();
+    }
+  };
 
   const handleDeleteModal = () => {
     setSelectedModal(null);
@@ -22,23 +38,6 @@ const MoviCart = ({ movie }) => {
   const handleShowModal = (movie) => {
     setSelectedModal(movie);
     setShowModal(true);
-  };
-
-  const hanleAddToCart = (event, movie) => {
-    event.stopPropagation();
-
-    // const found = cartData.find((item) => item.id === movie.id);
-    const found = cartData.find((item) => {
-      return item.id === movie.id;
-    });
-
-    console.log(found);
-
-    if (!found) {
-      setCartData([...cartData, movie]);
-    } else {
-      console.error("product alreday added");
-    }
   };
 
   return (
