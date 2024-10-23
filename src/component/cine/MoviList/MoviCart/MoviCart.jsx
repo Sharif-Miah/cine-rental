@@ -43,7 +43,11 @@ const MoviCart = ({ movie }) => {
   return (
     <>
       {showModal && (
-        <MovieModal onDelete={handleDeleteModal} movie={selectedModal} />
+        <MovieModal
+          onDelete={handleDeleteModal}
+          movie={selectedModal}
+          onAddMovie={hanleAddToCart}
+        />
       )}
 
       <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
