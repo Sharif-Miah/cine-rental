@@ -1,10 +1,16 @@
+import { useState } from "react";
 import "./App.css";
 import Page from "./component/Page/Page";
+import { MoviContext } from "./Context";
 
 function App() {
+  const { moviValue, setMoviValue } = useState(null);
+
   return (
     <>
-      <Page />
+      <MoviContext.Provider value={{ moviValue, setMoviValue }}>
+        <Page />
+      </MoviContext.Provider>
     </>
   );
 }

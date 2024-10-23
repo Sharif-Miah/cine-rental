@@ -7,21 +7,32 @@ import Rating from "../../Rating/Rating";
 
 const MoviCart = ({ movie }) => {
   const [showModal, setShowModal] = useState(false);
+  const [selectedModal, setSelectedModal] = useState(null);
 
-  const handleShowModal = () => {
+  const handleDeleteModal = () => {
+    setSelectedModal(null);
+    setShowModal(false);
+  };
+
+  const handleShowModal = (movie) => {
+    setSelectedModal(movie);
+    console.log(movie);
     setShowModal(true);
   };
 
   return (
     <>
-      {showModal && <MovieModal setShowModal={setShowModal} movie={movie} />}
-      <a href="#" onClick={() => handleShowModal()}>
-        <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
-          <img
-            className="w-full object-cover"
-            src={getImgUrl(`${movie.cover}`)}
-            alt="movie codver"
-          />
+      {showModal && (
+        <MovieModal onDelete={handleDeleteModal} movie={selectedModal} />
+      )}
+
+      <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
+        <img
+          className="w-full object-cover"
+          src={getImgUrl(`${movie.cover}`)}
+          alt="movie codver"
+        />
+        <a href="#" onClick={() => handleShowModal(movie)}>
           <figcaption className="pt-4">
             <h3 className="text-xl mb-1">{movie.title}</h3>
             <p className="text-[#575A6E] text-sm mb-2">{movie.genre}</p>
@@ -36,8 +47,8 @@ const MoviCart = ({ movie }) => {
               <span>${movie.price} | Add to Cart</span>
             </a>
           </figcaption>
-        </figure>
-      </a>
+        </a>
+      </figure>
     </>
   );
 };
