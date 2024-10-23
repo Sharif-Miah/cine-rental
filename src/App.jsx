@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Page from "./component/Page/Page";
 import { MoviContext } from "./Context";
 
 function App() {
-  const { moviValue, setMoviValue } = useState(null);
+  const { cartData, setCartData } = useState([]);
 
   return (
     <>
-      <MoviContext.Provider value={{ moviValue, setMoviValue }}>
+      <MoviContext.Provider value={{ cartData, setCartData }}>
         <Page />
+        <ToastContainer />
       </MoviContext.Provider>
     </>
   );

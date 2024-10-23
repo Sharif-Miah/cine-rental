@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { MoviContext } from "../../../../Context";
 import { getImgUrl } from "../../../../utils/cine-utility";
 import MovieModal from "../../MovieModal/MovieModal";
 import Rating from "../../Rating/Rating";
@@ -8,6 +10,9 @@ import Rating from "../../Rating/Rating";
 const MoviCart = ({ movie }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedModal, setSelectedModal] = useState(null);
+  const { cartData, setCartData } = useContext(MoviContext);
+
+  const notify = () => toast("Wow so easy!");
 
   const handleDeleteModal = () => {
     setSelectedModal(null);
@@ -16,8 +21,24 @@ const MoviCart = ({ movie }) => {
 
   const handleShowModal = (movie) => {
     setSelectedModal(movie);
-    console.log(movie);
     setShowModal(true);
+  };
+
+  const hanleAddToCart = (event, movie) => {
+    event.stopPropagation();
+
+    // const found = cartData.find((item) => item.id === movie.id);
+    const found = cartData.find((item) => {
+      return item.id === movie.id;
+    });
+
+    console.log(found);
+
+    if (!found) {
+      setCartData([...cartData, movie]);
+    } else {
+      console.error("product alreday added");
+    }
   };
 
   return (
@@ -42,6 +63,7 @@ const MoviCart = ({ movie }) => {
             <a
               className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
               href="#"
+              onClick={(e) => hanleAddToCart(e, movie)}
             >
               <img src="./assets/tag.svg" alt="" />
               <span>${movie.price} | Add to Cart</span>
